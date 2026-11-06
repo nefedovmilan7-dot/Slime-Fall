@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://bofvfqs0qfab7"]
+
+[ext_resource type="Script" uid="uid://1fininejjxf3" path="res://scripts/slime.gd" id="1_p2gj0"]
+[ext_resource type="Texture2D" uid="uid://cop8plw7v15kn" path="res://art/world/light.png" id="2_n6pvg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8hj8i"]
+size = Vector2(14, 14)
+
+[node name="Slime" type="CharacterBody2D" unique_id=1787082913]
+collision_layer = 2
+script = ExtResource("1_p2gj0")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1388527237]
+offset = Vector2(0, -16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=514164956]
+position = Vector2(0, -7)
+shape = SubResource("RectangleShape2D_8hj8i")
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=645953280]
+color = Color(0.5775558, 0.77726847, 0.5845161, 1)
+energy = 0.6
+texture = ExtResource("2_n6pvg")
+offset = Vector2(0, -7)
+texture_scale = 2.0
