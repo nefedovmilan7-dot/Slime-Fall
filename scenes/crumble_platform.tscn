@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://ctvpi38mx816f"]
+
+[ext_resource type="Script" uid="uid://cik6ayxgcpb7s" path="res://scripts/world/crumble_platform.gd" id="1_7nxym"]
+[ext_resource type="Texture2D" uid="uid://dtdabeheqbr86" path="res://art/world/platform_crumble.png" id="2_j6png"]
+
+[node name="CrumblePlatform" type="StaticBody2D" unique_id=1716553689]
+script = ExtResource("1_7nxym")
+
+[node name="Look" type="NinePatchRect" parent="." unique_id=51192470]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_j6png")
+patch_margin_left = 8
+patch_margin_right = 8
+axis_stretch_horizontal = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1210353922]
+one_way_collision = true
+
+[node name="Detector" type="Area2D" parent="." unique_id=1175779250]
+collision_layer = 0
+collision_mask = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detector" unique_id=1744337113]
