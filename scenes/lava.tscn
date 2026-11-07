@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://cf2vt7btvsvbs"]
+
+[ext_resource type="Script" uid="uid://beu1f4n5tojtq" path="res://scripts/world/lava.gd" id="1_f10td"]
+[ext_resource type="Texture2D" uid="uid://ef2eoccuf5yd" path="res://art/world/lava_body.png" id="2_3w25c"]
+[ext_resource type="Texture2D" uid="uid://bruh1nbkar73p" path="res://art/world/lava.png" id="3_sxvwp"]
+[ext_resource type="Texture2D" uid="uid://cop8plw7v15kn" path="res://art/world/light.png" id="4_pgx88"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n2icg"]
+size = Vector2(180, 700)
+
+[sub_resource type="Gradient" id="Gradient_w488u"]
+colors = PackedColorArray(1, 0.89411765, 0.36078432, 1, 0.7647059, 0.22352941, 0.25490198, 0.38431373)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_mlstk"]
+gradient = SubResource("Gradient_w488u")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_n2icg"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(90, 2, 1)
+direction = Vector3(0, -1, 0)
+spread = 25.0
+initial_velocity_min = 8.0
+initial_velocity_max = 24.0
+gravity = Vector3(0, -15, 0)
+scale_max = 2.0
+color_ramp = SubResource("GradientTexture1D_mlstk")
+
+[node name="Lava" type="Area2D" unique_id=211870489]
+collision_layer = 0
+collision_mask = 6
+script = ExtResource("1_f10td")
+
+[node name="Body" type="Sprite2D" parent="." unique_id=897632628]
+texture_repeat = 2
+position = Vector2(-8, 11)
+texture = ExtResource("2_3w25c")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 196, 700)
+
+[node name="Surface" type="Sprite2D" parent="." unique_id=262861955]
+texture_repeat = 2
+position = Vector2(-8, 0)
+texture = ExtResource("3_sxvwp")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 196, 12)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1565071271]
+position = Vector2(90, 356)
+shape = SubResource("RectangleShape2D_n2icg")
+
+[node name="Glow" type="PointLight2D" parent="." unique_id=607246997]
+position = Vector2(90, 0)
+color = Color(1, 0.5411765, 0.23921569, 1)
+energy = 1.4
+texture = ExtResource("4_pgx88")
+texture_scale = 6.0
+
+[node name="Embers" type="GPUParticles2D" parent="." unique_id=537991064]
+position = Vector2(90, 0)
+amount = 20
+lifetime = 2.0
+process_material = SubResource("ParticleProcessMaterial_n2icg")
