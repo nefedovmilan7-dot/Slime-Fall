@@ -5,6 +5,8 @@ var home: VBoxContainer
 var shop_layer: Control
 var shop_kind := "hat"
 
+static var notice_shown := false
+
 
 func _ready() -> void:
 	theme = UI.theme()
@@ -14,6 +16,9 @@ func _ready() -> void:
 	_home()
 	Global.coins_changed.connect(_update_coins)
 	_update_coins()
+	if not notice_shown:
+		notice_shown = true
+		_show_notice()
 
 
 func _background() -> void:
@@ -197,3 +202,42 @@ func _card(id: String) -> PanelContainer:
 		buy.disabled = Global.coins < price
 		v.add_child(buy)
 	return card
+
+func _show_notice() -> void:
+	var center := CenterContainer.new()
+	center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	center.mouse_filter = Control.MOUSE_FILTER_STOP
+	add_child(center)
+	
+	var p := PanelContainer.new()
+	p.custom_minimum_size = Vector2(140, 0)
+	center.add_child(p)
+	
+	var v := VBoxContainer.new()
+	v.add_theme_constant_override("separation", 6)
+	p.add_child(v)
+	
+	var title_lbl := UI.label("Notice", "Title")
+	title_lbl.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	v.add_child(title_lbl)
+	
+	var sub_lbl := UI.label("please read the github read.me", "Small")
+	sub_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD
+	sub_lbl.custom_minimum_size = Vector2(120, 0)
+	sub_lbl.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	v.add_child(sub_lbl)
+	
+	var btn_box := VBoxContainer.new()
+	btn_box.alignment = BoxContainer.ALIGNMENT_CENTER
+	btn_box.add_theme_constant_override("separation", 4)
+	v.add_child(btn_box)
+	
+	var btn_github := UI.button("Take me to it", func():
+		OS.shell_open("https://github.com/nefedovmilan7-dot/Slime-Fall"), "Blue")
+	btn_github.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	btn_box.add_child(btn_github)
+	
+	var btn_close := UI.button("I've read it", func():
+		center.queue_free(), "Gray")
+	btn_close.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	btn_box.add_child(btn_close)

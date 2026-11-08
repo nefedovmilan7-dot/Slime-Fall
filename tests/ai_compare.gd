@@ -1,6 +1,6 @@
 extends Node
 
-const LEVELS := 3
+const LEVELS := 10
 const LIMIT := 90.0
 var only := OS.get_environment("ONLY")
 var levels := int(OS.get_environment("LEVELS")) if OS.get_environment("LEVELS") != "" else LEVELS

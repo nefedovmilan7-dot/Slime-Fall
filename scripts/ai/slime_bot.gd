@@ -2,10 +2,10 @@ class_name SlimeBot
 extends Node
 
 const SKILLS := {
-	"easy": {"hesitate": Vector2(1.1, 1.9), "mistake": 0.3, "slip": 18.0, "senses": 0.55},
-	"medium": {"hesitate": Vector2(0.6, 1.1), "mistake": 0.15, "slip": 10.0, "senses": 0.75},
-	"hard": {"hesitate": Vector2(0.3, 0.6), "mistake": 0.06, "slip": 5.0, "senses": 0.85},
-	"impossible": {"hesitate": Vector2.ZERO, "mistake": 0.0, "slip": 0.0, "senses": 1.0},
+	"easy": {"hesitate": Vector2(1.1, 1.9), "mistake": 0.3, "slip": 18.0, "senses": 0.55, "plan": 1},
+	"medium": {"hesitate": Vector2(0.6, 1.1), "mistake": 0.15, "slip": 10.0, "senses": 0.75, "plan": 1},
+	"hard": {"hesitate": Vector2(0.3, 0.6), "mistake": 0.06, "slip": 5.0, "senses": 0.85, "plan": 2},
+	"impossible": {"hesitate": Vector2.ZERO, "mistake": 0.0, "slip": 0.0, "senses": 1.0, "plan": 3},
 }
 
 const BRAIN_PATH := "res://ai/brain.json"
@@ -29,6 +29,8 @@ var brain := {
 	"rock_radius": 15.0,
 	"edge": 5.0,
 	"dead_end": 30.0,
+	"lookahead": 0.8,
+	"spikes": 25.0,
 }
 
 var me: Slime
@@ -157,7 +159,9 @@ func _choose_target() -> void:
 			s += brain["spring"]
 		if _rock_near(lx, 0.0):
 			s -= 60.0
-		if not _has_next(p):
+		if skill["plan"] > 1:
+			s += brain["lookahead"] * _route_value(Vector2(lx, top), skill["plan"] - 1)
+		elif not _has_next(p):
 			s -= brain["dead_end"] 
 		if s > best_score:
 			best_score = s
@@ -170,6 +174,38 @@ func _choose_target() -> void:
 	_sees_danger = randf() < skill["senses"]
 	if target:
 		target_x = _landing_x_for(target)
+
+func _route_value(from: Vector2, depth: int) -> float:
+	if depth <= 0:
+		return 0.0
+	var best: float = -brain["dead_end"]
+	for q in _platforms():
+		var top := _top(q)
+		var dy := from.y - top
+		if dy < 4.0 or dy > 70.0 or not _reach_from(from, q):
+			continue
+		var v: float = dy * brain["height"]
+		if q.has_method("_on_detector_body_entered"):
+			v -= brain["crumble"]
+		if q is AnimatableBody2D:
+			v -= brain["moving"]
+		if _spring_on(q):
+			v += brain["spring"]
+		for sp in _spikes():
+			if absf(sp.y - top) < 6.0 and absf(sp.x - q.global_position.x) < q.width / 2.0:
+				v -= brain["spikes"]
+		v += 0.8 * _route_value(Vector2(_landing_x_for(q), top), depth - 1)
+		best = maxf(best, v)
+	return best
+
+func _reach_from(from: Vector2, q: Node2D) -> bool:
+	var t := _flight_time(from.y - _top(q), -JUMP_V)
+	if t <= 0.0:
+		return false
+	var reach: float = SPEED * maxf(t - 0.06, 0.0) + HALF -brain["margin"]
+	var half: float = q.width / 2.0 - HALF
+	var nearest := clampf(from.x, q.global_position.x - half, q.global_position.x + half)
+	return absf(nearest - from.x) <= reach
 
 func _reachable_now() -> Array:
 	var out := []
