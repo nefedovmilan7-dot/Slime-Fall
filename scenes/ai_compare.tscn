@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://tdl5yb65xr0w"]
+
+[ext_resource type="Script" uid="uid://hwg4tgby8hg0" path="res://tests/ai_compare.gd" id="1_qmjxh"]
+
+[node name="ai_compare" type="Node" unique_id=2020711203]
+script = ExtResource("1_qmjxh")
