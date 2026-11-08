@@ -1,4 +1,4 @@
-class_name Slimebot
+class_name SlimeBot
 extends Node
 
 const SKILLS := {
