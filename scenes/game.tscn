@@ -7,9 +7,13 @@
 [ext_resource type="PackedScene" uid="uid://cf2vt7btvsvbs" path="res://scenes/lava.tscn" id="5_kvpfn"]
 [ext_resource type="Script" uid="uid://hwa4fs6lgykg" path="res://scripts/level_generator.gd" id="6_dinhu"]
 [ext_resource type="Script" uid="uid://ceolwox5hic1e" path="res://scripts/world/game_camera.gd" id="7_kvuet"]
+[ext_resource type="Script" uid="uid://bdwjwx84yko3o" path="res://scripts/hud.gd" id="8_gee14"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n2icg"]
 size = Vector2(16, 64077.75)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mlstk"]
+size = Vector2(147, 10)
 
 [node name="Game" type="Node2D" unique_id=1485649019]
 script = ExtResource("1_u5sy4")
@@ -63,9 +67,9 @@ shape = SubResource("RectangleShape2D_n2icg")
 position = Vector2(90, 300)
 width = 148.0
 
-[node name="Lava" parent="." unique_id=211870489 node_paths=PackedStringArray("camera") instance=ExtResource("5_kvpfn")]
-position = Vector2(0, 360)
-camera = NodePath("../GameCamera")
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Ground" unique_id=555536921]
+position = Vector2(-0.5, 6)
+shape = SubResource("RectangleShape2D_mlstk")
 
 [node name="LevelGenerator" type="Node2D" parent="." unique_id=3406428 node_paths=PackedStringArray("camera")]
 script = ExtResource("6_dinhu")
@@ -75,5 +79,10 @@ camera = NodePath("../GameCamera")
 position = Vector2(90, 160)
 script = ExtResource("7_kvuet")
 
+[node name="Lava" parent="." unique_id=211870489 node_paths=PackedStringArray("camera") instance=ExtResource("5_kvpfn")]
+position = Vector2(0, 360)
+camera = NodePath("../GameCamera")
+
 [node name="HUD" type="CanvasLayer" parent="." unique_id=1999219555]
 process_mode = 3
+script = ExtResource("8_gee14")

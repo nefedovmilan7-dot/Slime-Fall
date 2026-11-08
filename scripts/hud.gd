@@ -18,8 +18,8 @@ func setup(g: Node2D) -> void:
 	root.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(root)
-	you_label = _corner(UI.label("", "Bold"), Vector2(22, 6))
-	ai_label = _corner(UI.label("", "Bold"), Vector2(112, 6))
+	you_label = _corner(UI.label("", "Small"), Vector2(22, 6))
+	ai_label = _corner(UI.label("", "Small"), Vector2(112, 6))
 	ai_label.modulate = Color(1, 1, 1, 0.75)
 	pips = _corner(UI.label("", "Small"), Vector2(60, 18))
 	pips.custom_minimum_size.x = 60
@@ -91,15 +91,15 @@ func _show(title: String, sub: String) -> void:
 func round_result(winner: String, you_m: int, ai_m: int) -> void:
 	_show("", "")
 	var title: String = {"you": "ROUND WON!", "ai": "ROUND LOST", "draw": "DRAW!"}[winner]
-	var p := _panel([UI.label(title, "Title"), UI.label("YOU %dM   AI %dM" % [you_m, ai_m], "Bold")])
+	var p := _panel([UI.label(title, "Title"), UI.label("YOU %dM   AI %dM" % [you_m, ai_m], "Small")])
 	await get_tree().create_timer(2.4).timeout
 	p.queue_free()
 
 func match_result(won: bool, reward: int) -> void:
 	var items: Array = [UI.label("YOU WIN!" if won else "THE AI WINS", "Title"),
-		UI.label("%d - %d" % [game.wins["you"], game.wins["ai"]], "Big")]
+		UI.label("%d - %d" % [game.wins["you"], game.wins["ai"]], "Small")]
 	if won:
-		items.append(UI.label("+%d COINS" % reward, "Bold"))
+		items.append(UI.label("+%d COINS" % reward, "Small"))
 	var again := UI.button("REMATCH", func():
 		panel_box.get_child(0).queue_free()
 		game.rematch())
