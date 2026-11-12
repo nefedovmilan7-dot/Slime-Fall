@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dp4mh0alja6kb" path="res://scripts/world/spring.gd" id="1_6vrsj"]
 [ext_resource type="Texture2D" uid="uid://qp0juiswohn4" path="res://art/ui/spring.png" id="2_f6w1c"]
+[ext_resource type="Texture2D" uid="uid://cop8plw7v15kn" path="res://art/world/light.png" id="3_f6w1c"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n2icg"]
 size = Vector2(12, 6)
@@ -18,3 +19,10 @@ offset = Vector2(0, -5)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=385512865]
 position = Vector2(0, -4)
 shape = SubResource("RectangleShape2D_n2icg")
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1795608062]
+color = Color(0.5775558, 0.77726847, 0.5845161, 1)
+energy = 0.6
+texture = ExtResource("3_f6w1c")
+offset = Vector2(0, -7)
+texture_scale = 2.0

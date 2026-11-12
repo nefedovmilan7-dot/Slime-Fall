@@ -2,18 +2,31 @@
 
 [ext_resource type="Script" uid="uid://dc46eyq7687fk" path="res://scripts/world/moving_platform.gd" id="1_1tdcd"]
 [ext_resource type="Texture2D" uid="uid://ph5bffbpfo5q" path="res://art/world/platform_moving.png" id="2_mb26n"]
+[ext_resource type="Texture2D" uid="uid://cop8plw7v15kn" path="res://art/world/light.png" id="3_mb26n"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_afg43"]
+size = Vector2(40, 6)
 
 [node name="MovingPlatform" type="AnimatableBody2D" unique_id=1030074780]
 collision_mask = 0
 script = ExtResource("1_1tdcd")
 
 [node name="Look" type="NinePatchRect" parent="." unique_id=1052002738]
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 12.0
 texture = ExtResource("2_mb26n")
 patch_margin_left = 8
 patch_margin_right = 8
 axis_stretch_horizontal = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1084972735]
+shape = SubResource("RectangleShape2D_afg43")
 one_way_collision = true
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1425517011]
+color = Color(0.5775558, 0.77726847, 0.5845161, 1)
+energy = 0.6
+texture = ExtResource("3_mb26n")
+offset = Vector2(0, -7)
+texture_scale = 2.0

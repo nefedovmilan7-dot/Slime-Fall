@@ -75,6 +75,8 @@ func _home() -> void:
 	shop.custom_minimum_size = Vector2(120, 0)
 	shop.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	home.add_child(shop)
+	if Global.best_height > 0:   # your records
+		home.add_child(UI.label("BEST %dM  -  %d WINS" % [Global.best_height, Global.matches_won], "Small"))
 
 
 func _open_modes() -> void:
@@ -96,6 +98,11 @@ func _open_modes() -> void:
 	screen.add_child(grid)
 	for id in Rivals.ALL:
 		grid.add_child(_rival_card(id))
+	var trial := UI.button("TIME TRIAL", func(): Transition.go("res://scenes/time_trial.tscn"), "Purple")
+	trial.custom_minimum_size = Vector2(158, 22)
+	trial.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	screen.add_child(trial)
+	screen.add_child(UI.label("BEST %.2f S" % Global.best_time if Global.best_time > 0.0 else "RACE YOUR OWN GHOST TO 100 M", "Small"))
 	var back := UI.button("BACK", func():
 		screen.queue_free()
 		home.visible = true, "Gray")
@@ -109,7 +116,7 @@ func _rival_card(id: String) -> Button:
 	var card := UI.button("", func():
 		Global.difficulty = id
 		Global.save_game()
-		get_tree().change_scene_to_file("res://scenes/game.tscn"), r[4])
+		Transition.go("res://scenes/game.tscn"), r[4])
 	card.custom_minimum_size = Vector2(76, 76)
 	var v := VBoxContainer.new()
 	v.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -149,7 +156,7 @@ func _fill_shop() -> void:
 	shop_layer.add_child(UI.label("SHOP", "Title"))
 	var tabs := HBoxContainer.new()
 	tabs.alignment = BoxContainer.ALIGNMENT_CENTER
-	for k in [["hat", "HATS"], ["color", "COLORS"]]:
+	for k in [["hat", "HATS"], ["color", "COLORS"], ["trail", "TRAILS"]]:
 		tabs.add_child(UI.button(k[1], func():
 			shop_kind = k[0]
 			_fill_shop(), "Gold" if shop_kind == k[0] else "Gray"))
@@ -163,7 +170,7 @@ func _fill_shop() -> void:
 	grid.add_theme_constant_override("h_separation", 3)
 	grid.add_theme_constant_override("v_separation", 3)
 	scroll.add_child(grid)
-	var list: Dictionary = Items.HATS if shop_kind == "hat" else Items.COLORS
+	var list: Dictionary = Items.list(shop_kind)
 	for id in list:
 		grid.add_child(_card(id))
 	var back := UI.button("BACK", func():
@@ -183,12 +190,18 @@ func _card(id: String) -> PanelContainer:
 	var pic := UI.slime_picture(hat, color, 1)
 	pic.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	v.add_child(pic)
+	if shop_kind == "trail":   # a strip in the trail's colour
+		var strip := ColorRect.new()
+		strip.color = Items.TRAILS[id][1] if id != "none" else Color(1, 1, 1, 0.15)
+		strip.custom_minimum_size = Vector2(30, 3)
+		strip.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+		v.add_child(strip)
 	var name := UI.label(Items.name_of(shop_kind, id), "Small")
 	name.autowrap_mode = TextServer.AUTOWRAP_WORD
 	name.custom_minimum_size = Vector2(40, 16)
 	v.add_child(name)
 	if Global.equipped[shop_kind] == id:
-		v.add_child(UI.label("WORN", "Small"))
+		v.add_child(UI.label("WORN", "Bold"))
 	elif Global.owns(shop_kind, id):
 		v.add_child(UI.button("WEAR", func():
 			Global.equip(shop_kind, id)

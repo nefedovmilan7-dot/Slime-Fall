@@ -7,10 +7,15 @@ const SLIME_PALETTE := [Color8(72, 192, 80), Color8(128, 228, 108), Color8(22, 6
 signal coins_changed
 
 var coins := 0
-var owned := ["hat:none", "color:green"]
-var equipped := {"hat": "none", "color": "green"}
+var owned := ["hat:none", "color:green", "trail:none"]
+var equipped := {"hat": "none", "color": "green", "trail": "none"}
 var difficulty := "medium"
 var sound_on := true
+var shake_on := true
+var best_height := 0
+var matches_won := 0
+var best_time := 0.0
+var ghost := PackedVector2Array()
 
 var music: AudioStreamPlayer
 var sfx_players: Array[AudioStreamPlayer] = []
@@ -54,6 +59,12 @@ func equip(kind: String, id: String) -> void:
 		equipped[kind] = id
 		save_game()
 
+func _record_height(meters: int) -> bool:
+	if meters < best_height:
+		return false
+	best_height = meters
+	save_game()
+	return true
 
 const ANIMATIONS := [["idle", 6, 6.0, true], ["jump", 4, 12.0, false], ["fall", 4, 8.0, true],
 	["land", 3, 16.0, false], ["die", 8, 10.0, false]]
@@ -138,7 +149,7 @@ func _exit_tree() -> void:
 
 
 
-const SAVED := ["coins", "owned", "equipped", "difficulty", "sound_on"]
+const SAVED := ["coins", "owned", "equipped", "difficulty", "sound_on", "shake_on", "best_height", "mathces_won", "best_time", "ghost"]
 
 
 func save_game() -> void:
@@ -158,3 +169,7 @@ func load_game() -> void:
 		var value = cfg.get_value("player", key, get(key))
 		if typeof(value) == typeof(get(key)): 
 			set(key, value)
+	if not equipped.has("trail"):
+		equipped["trail"] = "none"
+	if not "trail:none" in owned:
+		owned.append("trail:none")

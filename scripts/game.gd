@@ -1,6 +1,7 @@
 extends Node2D
 
 const SLIME := preload("res://scenes/slime.tscn")
+const BEST_LINE := preload("res://scripts/world/best_line.gd")
 const WINS_NEEDED := 2
 const START_Y := 300.0
 const PIXELS_PER_METER := 16.0
@@ -13,6 +14,7 @@ var wins := {"you": 0, "ai": 0}
 var player: Slime
 var ai: Slime
 var bot: SlimeBot
+var pause_menu: PauseMenu
 
 @onready var camera: GameCamera = $GameCamera
 @onready var level: Node2D = $LevelGenerator
@@ -22,7 +24,14 @@ var bot: SlimeBot
 
 func _ready() -> void:
 	Global.play_music("music_game")
+	pause_menu = PauseMenu.new()
+	add_child(pause_menu)
 	hud.setup(self)
+	if Global.best_height > 0:
+		var line: Node2D = BEST_LINE.new()
+		line.meters = Global.best_height
+		line.position.y = START_Y - Global.best_height * PIXELS_PER_METER
+		add_child(line)
 	start_round()
 
 func start_round() -> void:
@@ -37,6 +46,7 @@ func start_round() -> void:
 	player = SLIME.instantiate()
 	player.position = Vector2(70, START_Y)
 	add_child(player)
+	player.dress(Global.equipped["hat"], Global.equipped["color"], Global.equipped.get("trail", "none"))
 	player.dress(Global.equipped["hat"], Global.equipped["color"])
 	player.died.connect(_on_player_died)
 	ai = SLIME.instantiate()
@@ -78,6 +88,7 @@ func _process(_delta: float) -> void:
 
 func _on_player_died() -> void:
 	camera.shake(3.0)
+	_slow_motion()
 	if not ai.dead and state == State.RACING:
 		camera.target = ai 
 		ai.set_ghost(false) 
@@ -87,8 +98,17 @@ func _on_ai_died() -> void:
 	if not player.dead and state == State.RACING:
 		hud.show_message("THE AI MELTED!", "CLIMB PAST %d M TO WIN" % meters(ai))
 
+func _slow_motion() -> void:
+	Engine.time_scale = 0.35
+	await get_tree().create_timer(0.6, true, false, true).timeout
+	Engine.time_scale = 1.0
+
+func _exit_tree() -> void:
+	Engine.time_scale = 1.0
+
 func _end_round(winner: String) -> void:
 	state = State.ROUND_OVER
+	Global._record_height(meters(player))
 	if winner != "draw":
 		wins[winner] += 1
 	bot.set_physics_process(false)
@@ -104,6 +124,7 @@ func _end_match() -> void:
 	var won: bool = wins["you"] >= WINS_NEEDED
 	var reward: int = Rivals.reward(Global.difficulty) if won else 0
 	if won:
+		Global.matches_won += 1
 		Global.add_coins(reward)
 		Global.play_sfx("medal")
 	hud.match_result(won, reward)

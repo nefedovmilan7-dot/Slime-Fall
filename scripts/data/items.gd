@@ -16,10 +16,26 @@ const COLORS := {
 	"gold": ["GOLDEN", 0.8, 1.2, 1.15, 600], "shadow": ["SHADOW", 0.4, 0.3, 0.5, 900],
 }
 
+const TRAILS := {
+	"none": ["NO TRAIL", Color(0, 0, 0, 0), 0], "spark": ["SPARKS", Color("ffd23f"), 60],
+	"bubble": ["BUBBLES", Color("7fd8ff"), 90], "ember": ["EMBERS", Color("ff7a3d"), 120],
+	"slime": ["GOO", Color("6fe36a"), 150], "void": ["VOID", Color("a77bff"), 400],
+}
 
 static func price(kind: String, id: String) -> int:
-	return HATS[id][1] if kind == "hat" else COLORS[id][4]
-
+	match kind:
+		"hat": return HATS[id][1]
+		"color": return COLORS[id][4]
+		_: return TRAILS[id][2]
 
 static func name_of(kind: String, id: String) -> String:
-	return HATS[id][0] if kind == "hat" else COLORS[id][0]
+	match kind:
+		"hat": return HATS[id][0]
+		"color": return COLORS[id][0]
+		_: return TRAILS[id][0]
+
+static func list(kind: String) -> Dictionary:
+	match kind:
+		"hat": return HATS
+		"color": return COLORS
+		_: return TRAILS

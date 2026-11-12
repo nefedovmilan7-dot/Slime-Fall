@@ -32,6 +32,17 @@ static func theme() -> Theme:
 	_theme = t
 	return t
 
+static func touch_buttons(parent: Node) -> void:
+	if not (OS.has_feature("mobile") or OS.has_feature("web_android") or OS.has_feature("web_ios")):
+		return
+	for b in [["move_left", "touch_left", Vector2(4, 272)], ["move_right", "touch_right", Vector2(48, 272)], ["jump", "touch_jump", Vector2(136, 272)]]:
+		var t := TouchScreenButton.new()
+		t.action = b[0]
+		t.texture_normal = load("res://art/ui/%s.png" % b[1])
+		t.texture_pressed = load("res://art/ui/%s_pressed.png" % b[1])
+		t.position = b[2]
+		parent.add_child(t)
+
 
 static func clear() -> void:
 	_theme = null

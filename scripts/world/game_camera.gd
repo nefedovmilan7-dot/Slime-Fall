@@ -19,7 +19,8 @@ func _process(delta: float) -> void:
 
 
 func shake(amount: float) -> void:
-	shake_strength = amount
+	if Global.shake_on:
+		shake_strength = amount
 
 func top_edge() -> float:
 	return position.y - get_viewport_rect().size.y / 2.0

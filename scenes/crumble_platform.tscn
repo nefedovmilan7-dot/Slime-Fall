@@ -2,23 +2,42 @@
 
 [ext_resource type="Script" uid="uid://cik6ayxgcpb7s" path="res://scripts/world/crumble_platform.gd" id="1_7nxym"]
 [ext_resource type="Texture2D" uid="uid://dtdabeheqbr86" path="res://art/world/platform_crumble.png" id="2_j6png"]
+[ext_resource type="Texture2D" uid="uid://cop8plw7v15kn" path="res://art/world/light.png" id="3_j6png"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ry04r"]
+size = Vector2(40, 6)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_72li2"]
+size = Vector2(36, 4)
 
 [node name="CrumblePlatform" type="StaticBody2D" unique_id=1716553689]
 script = ExtResource("1_7nxym")
 
 [node name="Look" type="NinePatchRect" parent="." unique_id=51192470]
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 12.0
 texture = ExtResource("2_j6png")
 patch_margin_left = 8
 patch_margin_right = 8
 axis_stretch_horizontal = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1210353922]
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_ry04r")
 one_way_collision = true
+
+[node name="PointLight2D" type="PointLight2D" parent="CollisionShape2D" unique_id=1524657149]
+color = Color(0.5775558, 0.77726847, 0.5845161, 1)
+energy = 0.6
+texture = ExtResource("3_j6png")
+offset = Vector2(0, -7)
+texture_scale = 2.0
 
 [node name="Detector" type="Area2D" parent="." unique_id=1175779250]
 collision_layer = 0
 collision_mask = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Detector" unique_id=1744337113]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_72li2")

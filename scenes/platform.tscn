@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b0a6ygk1ir6mq" path="res://scripts/world/platform.gd" id="1_nlgqw"]
 [ext_resource type="Texture2D" uid="uid://cev31a6iebtjd" path="res://art/world/platform.png" id="2_507ja"]
+[ext_resource type="Texture2D" uid="uid://cop8plw7v15kn" path="res://art/world/light.png" id="3_507ja"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gee14"]
 size = Vector2(48, 13)
@@ -23,3 +24,10 @@ axis_stretch_horizontal = 1
 position = Vector2(0, 5.5)
 shape = SubResource("RectangleShape2D_gee14")
 one_way_collision = true
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=865405516]
+color = Color(0.5775558, 0.77726847, 0.5845161, 1)
+energy = 0.6
+texture = ExtResource("3_507ja")
+offset = Vector2(0, -7)
+texture_scale = 2.0

@@ -28,7 +28,7 @@ texture = ExtResource("2_gee14")
 centered = false
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1182965115]
-color = Color(0.6039216, 0.5647059, 0.7529412, 1)
+color = Color(0.26204556, 0.2431766, 0.33374757, 1)
 
 [node name="Walls" type="Node2D" parent="." unique_id=1905650498]
 
