@@ -1,11 +1,12 @@
 [gd_scene format=3 uid="uid://djw4u7r6h0vhr"]
 
-[ext_resource type="Texture2D" uid="uid://dqvm0thbj7gq" path="res://art/world/background.png" id="2_wq433"]
-[ext_resource type="Texture2D" uid="uid://eai36yf1qc70" path="res://art/world/wall.png" id="3_qv68d"]
-[ext_resource type="PackedScene" uid="uid://br7i7tg3jhnoi" path="res://scenes/platform.tscn" id="4_alejf"]
-[ext_resource type="Script" uid="uid://hwa4fs6lgykg" path="res://scripts/level_generator.gd" id="5_n5tiu"]
-[ext_resource type="Script" uid="uid://ceolwox5hic1e" path="res://scripts/world/game_camera.gd" id="6_epbhn"]
-[ext_resource type="PackedScene" uid="uid://cf2vt7btvsvbs" path="res://scenes/lava.tscn" id="7_pjrvc"]
+[ext_resource type="Script" uid="uid://b4x5cp6v7x5nm" path="res://scripts/time_trial.gd" id="1_sdong"]
+[ext_resource type="Texture2D" uid="uid://dqvm0thbj7gq" path="res://art/world/background.png" id="2_edloj"]
+[ext_resource type="Texture2D" uid="uid://eai36yf1qc70" path="res://art/world/wall.png" id="3_nf7tl"]
+[ext_resource type="PackedScene" uid="uid://br7i7tg3jhnoi" path="res://scenes/platform.tscn" id="4_hvr7m"]
+[ext_resource type="Script" uid="uid://hwa4fs6lgykg" path="res://scripts/level_generator.gd" id="5_w75a8"]
+[ext_resource type="Script" uid="uid://ceolwox5hic1e" path="res://scripts/world/game_camera.gd" id="6_qg255"]
+[ext_resource type="PackedScene" uid="uid://cf2vt7btvsvbs" path="res://scenes/lava.tscn" id="7_dcia2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n2icg"]
 size = Vector2(16, 64077.75)
@@ -13,7 +14,8 @@ size = Vector2(16, 64077.75)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mlstk"]
 size = Vector2(147, 10)
 
-[node name="TimeTrail" type="Node2D" unique_id=1485649019]
+[node name="TimeTrial" type="Node2D" unique_id=1485649019]
+script = ExtResource("1_sdong")
 
 [node name="Backround" type="Parallax2D" parent="." unique_id=2096432523]
 scroll_scale = Vector2(1, 0.5)
@@ -21,7 +23,7 @@ repeat_size = Vector2(0, 256)
 repeat_times = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="Backround" unique_id=1709370124]
-texture = ExtResource("2_wq433")
+texture = ExtResource("2_edloj")
 centered = false
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1182965115]
@@ -36,7 +38,7 @@ position = Vector2(8, -31700)
 texture_repeat = 2
 position = Vector2(0, 32.50039)
 scale = Vector2(1, 1.0010157)
-texture = ExtResource("3_qv68d")
+texture = ExtResource("3_nf7tl")
 region_enabled = true
 region_rect = Rect2(0, 0, 16, 64000)
 
@@ -51,7 +53,7 @@ position = Vector2(172, -31700)
 texture_repeat = 2
 position = Vector2(0, 32.998222)
 scale = Vector2(1, 1.0010313)
-texture = ExtResource("3_qv68d")
+texture = ExtResource("3_nf7tl")
 flip_h = true
 region_enabled = true
 region_rect = Rect2(0, 0, 16, 64000)
@@ -60,7 +62,7 @@ region_rect = Rect2(0, 0, 16, 64000)
 position = Vector2(0, 27.125)
 shape = SubResource("RectangleShape2D_n2icg")
 
-[node name="Ground" parent="." unique_id=434043166 instance=ExtResource("4_alejf")]
+[node name="Ground" parent="." unique_id=434043166 instance=ExtResource("4_hvr7m")]
 position = Vector2(90, 300)
 width = 148.0
 
@@ -69,13 +71,13 @@ position = Vector2(-0.5, 6)
 shape = SubResource("RectangleShape2D_mlstk")
 
 [node name="LevelGenerator" type="Node2D" parent="." unique_id=3406428 node_paths=PackedStringArray("camera")]
-script = ExtResource("5_n5tiu")
+script = ExtResource("5_w75a8")
 camera = NodePath("../GameCamera")
 
 [node name="GameCamera" type="Camera2D" parent="." unique_id=2030886168]
 position = Vector2(90, 160)
-script = ExtResource("6_epbhn")
+script = ExtResource("6_qg255")
 
-[node name="Lava" parent="." unique_id=211870489 node_paths=PackedStringArray("camera") instance=ExtResource("7_pjrvc")]
+[node name="Lava" parent="." unique_id=211870489 node_paths=PackedStringArray("camera") instance=ExtResource("7_dcia2")]
 position = Vector2(0, 360)
 camera = NodePath("../GameCamera")

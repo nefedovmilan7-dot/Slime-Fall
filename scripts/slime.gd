@@ -84,13 +84,11 @@ func set_ghost(on: bool) -> void:
 func _physics_process(delta: float) -> void:
 	if dead:
 		return
-	# 1. read the buttons (the AI's virtual ones, or the real ones)
 	var move: float = ai_move if is_ai else Input.get_axis("move_left", "move_right")
 	var jump_down: bool = ai_jump if is_ai else Input.is_action_pressed("jump")
 	var jump_pressed := jump_down and not _jump_was_down
 	var jump_released := _jump_was_down and not jump_down
 	_jump_was_down = jump_down
-	# 2. gravity, coyote time and the jump buffer
 	if not is_on_floor():
 		velocity.y = minf(velocity.y + GRAVITY * gravity_scale * delta, MAX_FALL_SPEED)
 	_coyote = COYOTE_TIME if is_on_floor() else _coyote - delta
@@ -105,8 +103,7 @@ func _physics_process(delta: float) -> void:
 		if not is_ai:
 			Global.play_sfx("jump", randf_range(0.95, 1.05))
 	if jump_released and velocity.y < 0.0:
-		velocity.y *= 0.45   # let go early = a smaller jump
-	# 3. walking, then move
+		velocity.y *= 0.45
 	var accel := ACCEL_GROUND if is_on_floor() else ACCEL_AIR
 	velocity.x = move_toward(velocity.x, move * SPEED + wind, accel * delta)
 	if move != 0.0:

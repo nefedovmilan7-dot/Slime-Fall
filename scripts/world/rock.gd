@@ -10,7 +10,7 @@ func _ready() -> void:
 	$Sprite2D.visible = false
 
 
-func _procces(delta: float) -> void:
+func _process(delta: float) -> void:
 	if not falling:
 		warn_time -= delta
 		position.y = camera.top_edge() + 10.0

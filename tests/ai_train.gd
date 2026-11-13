@@ -3,7 +3,7 @@ extends Node
 var towers := 12
 var rounds := 60
 var first_seed := 5000
-var sigma := 150.0
+var sigma := 0.25
 
 const LIMIT := 150.0
 

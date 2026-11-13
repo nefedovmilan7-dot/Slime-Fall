@@ -59,8 +59,8 @@ func equip(kind: String, id: String) -> void:
 		equipped[kind] = id
 		save_game()
 
-func _record_height(meters: int) -> bool:
-	if meters < best_height:
+func record_height(meters: int) -> bool:
+	if meters <= best_height:
 		return false
 	best_height = meters
 	save_game()
@@ -148,8 +148,7 @@ func _exit_tree() -> void:
 	UI.clear()
 
 
-
-const SAVED := ["coins", "owned", "equipped", "difficulty", "sound_on", "shake_on", "best_height", "mathces_won", "best_time", "ghost"]
+const SAVED := ["coins", "owned", "equipped", "difficulty", "sound_on", "shake_on", "best_height", "matches_won", "best_time", "ghost"]
 
 
 func save_game() -> void:

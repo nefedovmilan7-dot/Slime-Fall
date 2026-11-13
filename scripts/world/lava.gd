@@ -16,14 +16,14 @@ var time := 0.0
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
 	$Body.region_rect.size.x = width + 16.0
-	surface.region_rect_size.x = width + 16.0
+	surface.region_rect.size.x = width + 16.0
 	var shape: RectangleShape2D = $CollisionShape2D.shape.duplicate()
 	shape.size.x = width
 	$CollisionShape2D.shape = shape
 	$CollisionShape2D.position.x = width / 2.0
 	$Glow.position.x = width / 2.0
 	$Embers.position.x = width / 2.0
-	$Embers.emission_rect_extens.x = width / 2.0
+	$Embers.process_material.emission_box_extents.x = width / 2.0
 
 
 func reset(y: float) -> void:
@@ -34,7 +34,7 @@ func reset(y: float) -> void:
 
 func _physics_process(delta: float) -> void:
 	time += delta
-	var frame := int(time + 6.0) % 4
+	var frame := int(time * 6.0) % 4
 	surface.region_rect.position = Vector2(fmod(time * 10.0, 32.0), frame * 12)
 	$Body.region_rect.position = Vector2(fmod(time * 4.0, 32.0), fmod(time * 12.0, 32.0))
 	if time < start_delay:

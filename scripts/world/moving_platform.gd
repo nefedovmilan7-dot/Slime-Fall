@@ -32,4 +32,4 @@ func _apply_width() -> void:
 	var shape := RectangleShape2D.new()
 	shape.size = Vector2(width, 6)
 	$CollisionShape2D.shape = shape
-	$CollisionShape2D.postion = Vector2(0, 3)
+	$CollisionShape2D.position = Vector2(0, 3)

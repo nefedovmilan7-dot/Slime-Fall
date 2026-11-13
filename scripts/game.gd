@@ -47,7 +47,6 @@ func start_round() -> void:
 	player.position = Vector2(70, START_Y)
 	add_child(player)
 	player.dress(Global.equipped["hat"], Global.equipped["color"], Global.equipped.get("trail", "none"))
-	player.dress(Global.equipped["hat"], Global.equipped["color"])
 	player.died.connect(_on_player_died)
 	ai = SLIME.instantiate()
 	ai.is_ai = true
@@ -108,7 +107,7 @@ func _exit_tree() -> void:
 
 func _end_round(winner: String) -> void:
 	state = State.ROUND_OVER
-	Global._record_height(meters(player))
+	Global.record_height(meters(player))
 	if winner != "draw":
 		wins[winner] += 1
 	bot.set_physics_process(false)
