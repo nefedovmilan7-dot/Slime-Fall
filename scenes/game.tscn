@@ -12,9 +12,6 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n2icg"]
 size = Vector2(16, 64077.75)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_mlstk"]
-size = Vector2(147, 10)
-
 [node name="Game" type="Node2D" unique_id=1485649019]
 script = ExtResource("1_u5sy4")
 
@@ -66,10 +63,6 @@ shape = SubResource("RectangleShape2D_n2icg")
 [node name="Ground" parent="." unique_id=434043166 instance=ExtResource("4_vtaks")]
 position = Vector2(90, 300)
 width = 148.0
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Ground" unique_id=555536921]
-position = Vector2(-0.5, 6)
-shape = SubResource("RectangleShape2D_mlstk")
 
 [node name="LevelGenerator" type="Node2D" parent="." unique_id=3406428 node_paths=PackedStringArray("camera")]
 script = ExtResource("6_dinhu")

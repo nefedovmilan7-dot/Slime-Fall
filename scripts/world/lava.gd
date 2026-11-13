@@ -23,7 +23,7 @@ func _ready() -> void:
 	$CollisionShape2D.position.x = width / 2.0
 	$Glow.position.x = width / 2.0
 	$Embers.position.x = width / 2.0
-	$Embers.process_material.emission_box_extents.x = width / 2.0
+	$Embers.process_material.emission_box_extents.x = width / 2.0   # GPU particles keep their settings in the material
 
 
 func reset(y: float) -> void:

@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bcw5i5cx88f1t"]
+
+[ext_resource type="Script" uid="uid://dd85nc7ml04kg" path="res://tests/evolve.gd" id="1_b7cxe"]
+
+[node name="Evolve" type="Node" unique_id=1050968960]
+script = ExtResource("1_b7cxe")

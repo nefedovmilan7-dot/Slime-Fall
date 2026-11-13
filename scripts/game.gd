@@ -13,7 +13,7 @@ var round_no := 0
 var wins := {"you": 0, "ai": 0}
 var player: Slime
 var ai: Slime
-var bot: SlimeBot
+var bot: NeuralBot
 var pause_menu: PauseMenu
 
 @onready var camera: GameCamera = $GameCamera
@@ -56,9 +56,10 @@ func start_round() -> void:
 	ai.dress(Rivals.hat(Global.difficulty), Rivals.color(Global.difficulty))
 	ai.modulate.a = 0.45
 	ai.died.connect(_on_ai_died)
-	bot = SlimeBot.new()
+	bot = NeuralBot.new()
 	add_child(bot)
-	bot.setup(ai, level, Global.difficulty)
+	bot.setup(ai, level, lava, Global.difficulty)
+	hud.show_brain(bot.net)
 	level.slimes = [player, ai]
 	camera.target = player
 	for s in [player, ai]:

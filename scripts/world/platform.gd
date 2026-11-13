@@ -15,7 +15,6 @@ func _apply_width() -> void:
 	$Look.size = Vector2(width, 12)
 	$Look.position = Vector2(-width / 2.0, 0)
 	var shape := RectangleShape2D.new()
-	@warning_ignore("standalone_expression")
 	shape.size = Vector2(width, 6)
 	$CollisionShape2D.shape = shape
 	$CollisionShape2D.position = Vector2(0, 3)

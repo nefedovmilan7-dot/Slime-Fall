@@ -76,6 +76,18 @@ func _process(_delta: float) -> void:
 		pointer.position = Vector2(clampf(ai.position.x - 30.0, 0.0, 120.0), 30.0 if above else 296.0)
 
 
+var brain_view: NeuralView
+
+
+func show_brain(net: NeuralNet) -> void:
+	if brain_view == null:
+		brain_view = NeuralView.new()
+		root.add_child(brain_view)
+	brain_view.net = net
+	var phone := OS.has_feature("mobile") or OS.has_feature("web_android") or OS.has_feature("web_ios")
+	brain_view.position = Vector2(180 - 76, (196 if phone else 236))
+
+
 func countdown(round_no: int) -> void:
 	next_milestone = 50
 	_show("ROUND %d" % round_no, "AI: " + Global.difficulty.to_upper())

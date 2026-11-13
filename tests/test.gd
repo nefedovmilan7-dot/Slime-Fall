@@ -14,8 +14,8 @@ func _ready() -> void:
 	Global.set_meta("no_save", true)
 	Global.sound_on = false
 	Global.coins = 100
-	Global.owned = ["hat:none", "color:green"]
-	Global.equipped = {"hat": "none", "color": "green"}
+	Global.owned = ["hat:none", "color:green", "trail:none"]
+	Global.equipped = {"hat": "none", "color": "green", "trail": "none"}
 	_run.call_deferred()
 
 func _run() -> void:
