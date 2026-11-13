@@ -15,7 +15,7 @@ you might wonder what the SlimeAI is:
   6. neural_view or "the lines showing" uses a _draw() func to draw everything and a _node_pos() to put the rectangle in the bottom right corner
   7. the network is initiated on all 4 bots at once
   8. the training process: 1. the impossible slime tries 3 attemps on its own. 2. 500 slimes try to geet as high as possible. 3. repeat until finished
-  9. the AI is as perfect as it could be, except with the hold_jump variable, you see jumps are smaller if a small tap and big if a hold! unfourtunately i only realised this typing this Readme.md (xd)
+  9. the AI is as perfect as it could be, except without the hold_jump variable, you see jumps are smaller if a small tap and big if a hold! unfourtunately i only realised this typing this Readme.md (xd)
 
 Thank you for reading the ReadMe,
  Enjoy SlimeFall,
